@@ -15,7 +15,8 @@ router.post('/create', checkLogin, function(req, res, next){
 
 // GET /posts/create 发表文章页
 router.get('/create', checkLogin, function(req, res, next){
-  res.send('发表文章页');
+  console.log(req.session.user);
+  res.render('create');
 })
 
 // GET /posts/:postId 单独一篇的文章页

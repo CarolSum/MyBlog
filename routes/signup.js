@@ -17,7 +17,7 @@ router.post('/', checkNotLogin, function (req, res, next) {
   const name = req.fields.name;
   const gender = req.fields.gender;
   const bio = req.fields.bio;
-  const avater = req.files.avater.path.split(path.sep).pop();
+  const avatar = req.files.avatar.path.split(path.sep).pop();
   let password = req.fields.password;
   const repassword = req.fields.repassword;
 
@@ -31,7 +31,7 @@ router.post('/', checkNotLogin, function (req, res, next) {
     if(!(bio.length >= 1 && bio.length <= 30)){
       throw new Error('个人简介请限制在1-30个字符');
     }
-    if(!req.files.avater.name){
+    if(!req.files.avatar.name){
       throw new Error('缺少头像');
     }
     if(password.length < 6){
@@ -42,7 +42,7 @@ router.post('/', checkNotLogin, function (req, res, next) {
     }
   }catch(e){
     //注册失败，异步删除上传的头像
-    fs.unlink(req.files.avater.path);
+    fs.unlink(req.files.avatar.path);
     req.flash('error', e.message);
     return res.redirect('/signup');
   }
@@ -56,7 +56,7 @@ router.post('/', checkNotLogin, function (req, res, next) {
     password: password,
     gender: gender,
     bio: bio,
-    avater: avater
+    avatar: avatar
   }
 
   //用户信息写入数据库
@@ -67,7 +67,7 @@ router.post('/', checkNotLogin, function (req, res, next) {
     req.flash('success', '注册成功');
     res.redirect('/posts');
   }).catch(function(e){
-    fs.unlink(req.files.avater.path);
+    fs.unlink(req.files.avatar.path);
     if(e.message.match('duplicate key')){
       req.flash('error','用户名已存在');
       return res.redirect('/signup');
