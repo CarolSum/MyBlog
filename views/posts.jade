@@ -1,5 +1,6 @@
-include ./header.jade  
-这是主页
-  
+include ./header.jade
+each post in posts
+  include ./components/post-content.jade
 
-include ./footer.jade  
+
+include ./footer.jade
