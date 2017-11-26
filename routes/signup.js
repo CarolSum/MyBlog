@@ -9,6 +9,7 @@ var checkNotLogin = require('../middlewares/checkLoginState').checkNotLogin;
 
 // GET /signup 注册页
 router.get('/', checkNotLogin, function (req, res, next) {
+  //console.log(res._headerSent);
   res.render('signup');
 })
 
